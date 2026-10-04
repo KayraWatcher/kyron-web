@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import Home from './pages/Home'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
+import Admin from './pages/Admin'
 import NotFound from './pages/NotFound'
 
-type Route = 'home' | 'privacy' | 'terms' | 'not-found'
+type Route = 'home' | 'privacy' | 'terms' | 'admin' | 'not-found'
 
 /**
  * Minimal hash tabanlı router.
@@ -12,6 +13,7 @@ type Route = 'home' | 'privacy' | 'terms' | 'not-found'
  *   #/                -> Ana sayfa
  *   #/gizlilik        -> Gizlilik
  *   #/kullanim-kosullari -> Kullanım koşulları
+ *   #/admin           -> KYRON Admin (giriş zorunlu; menüde linki yok)
  *   #/#section        -> Ana sayfada bölüm kaydırma
  */
 function parseHash(): { route: Route; anchor: string | null } {
@@ -21,6 +23,7 @@ function parseHash(): { route: Route; anchor: string | null } {
   if (path === '' || path === '/') return { route: 'home', anchor: anchor ?? null }
   if (path === '/gizlilik') return { route: 'privacy', anchor: null }
   if (path === '/kullanim-kosullari') return { route: 'terms', anchor: null }
+  if (path === '/admin') return { route: 'admin', anchor: null }
 
   return { route: 'not-found', anchor: null }
 }
@@ -50,6 +53,8 @@ export default function App() {
       return <Privacy />
     case 'terms':
       return <Terms />
+    case 'admin':
+      return <Admin />
     case 'not-found':
       return <NotFound />
     default:
