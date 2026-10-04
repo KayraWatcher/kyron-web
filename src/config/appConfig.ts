@@ -16,9 +16,9 @@ export interface ApkRelease {
 }
 
 export const APK_RELEASE: ApkRelease = {
-  url: null,
-  version: null,
-  fileSize: null,
+  url: 'https://github.com/KayraWatcher/kyron/releases/download/v1.0.0/KYRON-v1.0.0.apk',
+  version: 'v1.0.0',
+  fileSize: '56.9 MB',
 }
 
 export const APP_NAME = 'KYRON'
