@@ -1,0 +1,9 @@
+{
+  "$schema": "https://schema.cloudflare.com/wrangler/config/v2.json",
+  "name": "kyronapp",
+  "compatibility_date": "2024-10-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist"
+  }
+}
