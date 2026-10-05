@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "verify": "node scripts/verify.mjs",
-    "deploy": "npx wrangler deploy"
+    "deploy": "npx wrangler pages deploy dist --project-name=kyronapp --branch=main"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.2",
