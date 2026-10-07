@@ -15,6 +15,7 @@ export default function DownloadSection() {
 
   const { url, version, fileSize } = APK_RELEASE
   const available = Boolean(url)
+  const href = url ? (url.startsWith('/') ? '/kyron-web' + url : url) : null
 
   const facts: Array<{ label: string; value: string }> = []
   if (version) facts.push({ label: 'Sürüm', value: version })
@@ -46,7 +47,7 @@ export default function DownloadSection() {
             <span className="download__panel-title">En güncel Android sürümü</span>
 
             {available ? (
-              <a className="btn btn--primary btn--lg download__btn" href={url!} download>
+              <a className="btn btn--primary btn--lg download__btn" href={href!} download>
                 <DownloadIcon />
                 APK indir
               </a>

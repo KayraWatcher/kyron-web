@@ -12,7 +12,8 @@ interface Props {
  * "yakında" durumunda görünür ve `aria-disabled` olarak işaretlenir.
  */
 export default function DownloadButton({ className = '', size = 'sm' }: Props) {
-  const href = APK_RELEASE.url
+  const raw = APK_RELEASE.url
+  const href = raw ? (raw.startsWith('/') ? '/kyron-web' + raw : raw) : null
   const available = Boolean(href)
 
   const classes = [
