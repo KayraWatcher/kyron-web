@@ -375,46 +375,6 @@ function Dashboard({ session, onLogout }: { session: Session; onLogout: () => vo
             </div>
 
             <section className="admin__panel card">
-              <h2 className="admin__panel-title">RECENT ACTIVITY</h2>
-              <div className="admin__events">
-                {stats.recent.length === 0 && (
-                  <div className="admin__muted">Henüz olay kaydı yok</div>
-                )}
-                {(() => {
-                  let lastDay = ''
-                  return stats.recent.map((e) => {
-                    const d = new Date(e.createdAt)
-                    const label = dayLabel(d)
-                    const newDay = label !== lastDay
-                    lastDay = label
-                    const hhmm = `${String(d.getHours()).padStart(2, '0')}:${String(
-                      d.getMinutes(),
-                    ).padStart(2, '0')}`
-                    const { version, build } = splitVersion(e.appVersion)
-                    return (
-                      <div className="admin__event-row" key={e.id}>
-                        <span className="admin__event-day">
-                          {newDay && <strong>{label}</strong>}
-                        </span>
-                        <span className="admin__mono admin__event-time">{hhmm}</span>
-                        <span
-                          className={`admin__badge admin__badge--${e.eventType === 'app_update' ? 'update' : 'open'}`}
-                        >
-                          {e.eventType}
-                        </span>
-                        <span className="admin__mono">
-                          v{version}
-                          {build ? `+${build}` : ''}
-                        </span>
-                        <span className="admin__muted">{e.platform}</span>
-                      </div>
-                    )
-                  })
-                })()}
-              </div>
-            </section>
-
-            <section className="admin__panel card">
               <h2 className="admin__panel-title">CİHAZLAR / SON BAĞLANTILAR</h2>
               <p className="admin__muted admin__devices-note">
                 IP ve cihaz bilgisi yalnızca güvenlik, hata ayıklama ve bağlantı
@@ -476,6 +436,47 @@ function Dashboard({ session, onLogout }: { session: Session; onLogout: () => vo
                 </>
               )}
             </section>
+
+            <section className="admin__panel card">
+              <h2 className="admin__panel-title">RECENT ACTIVITY</h2>
+              <div className="admin__events">
+                {stats.recent.length === 0 && (
+                  <div className="admin__muted">Henüz olay kaydı yok</div>
+                )}
+                {(() => {
+                  let lastDay = ''
+                  return stats.recent.map((e) => {
+                    const d = new Date(e.createdAt)
+                    const label = dayLabel(d)
+                    const newDay = label !== lastDay
+                    lastDay = label
+                    const hhmm = `${String(d.getHours()).padStart(2, '0')}:${String(
+                      d.getMinutes(),
+                    ).padStart(2, '0')}`
+                    const { version, build } = splitVersion(e.appVersion)
+                    return (
+                      <div className="admin__event-row" key={e.id}>
+                        <span className="admin__event-day">
+                          {newDay && <strong>{label}</strong>}
+                        </span>
+                        <span className="admin__mono admin__event-time">{hhmm}</span>
+                        <span
+                          className={`admin__badge admin__badge--${e.eventType === 'app_update' ? 'update' : 'open'}`}
+                        >
+                          {e.eventType}
+                        </span>
+                        <span className="admin__mono">
+                          v{version}
+                          {build ? `+${build}` : ''}
+                        </span>
+                        <span className="admin__muted">{e.platform}</span>
+                      </div>
+                    )
+                  })
+                })()}
+              </div>
+            </section>
+
           </>
         )}
       </main>
