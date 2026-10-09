@@ -16,7 +16,7 @@ export interface ApkRelease {
 }
 
 export const APK_RELEASE: ApkRelease = {
-  url: '/downloads/GOLD-v1.3.1.apk',
+  url: '/downloads/KYRON-v1.3.1.apk',
   version: 'v1.3.1',
   fileSize: '57.7 MB',
 }
