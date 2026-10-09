@@ -16,12 +16,12 @@ export interface ApkRelease {
 }
 
 export const APK_RELEASE: ApkRelease = {
-  url: '/downloads/KYRON-v1.3.0.apk',
-  version: 'v1.3.0',
-  fileSize: '57.6 MB',
+  url: '/downloads/GOLD-v1.3.1.apk',
+  version: 'v1.3.1',
+  fileSize: '57.7 MB',
 }
 
-export const APP_NAME = 'KYRON'
+export const APP_NAME = 'GOLD'
 export const APP_TAGLINE = 'Türkiye piyasalarını tek yerde takip et.'
 export const APP_DESCRIPTION =
   'Modern finans uygulaması. BIST, altın, döviz, gümüş, fonlar, haberler ve ekonomik takvim tek uygulamada.'
