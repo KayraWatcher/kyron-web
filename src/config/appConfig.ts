@@ -16,8 +16,8 @@ export interface ApkRelease {
 }
 
 export const APK_RELEASE: ApkRelease = {
-  url: '/downloads/KYRON-v1.2.0.apk',
-  version: 'v1.2.0',
+  url: '/downloads/KYRON-v1.3.0.apk',
+  version: 'v1.3.0',
   fileSize: '57.6 MB',
 }
 
