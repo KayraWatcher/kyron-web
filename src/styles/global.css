@@ -1502,6 +1502,53 @@ ul {
   background: rgba(33, 192, 122, 0.12);
 }
 
+/* --- cihazlar / son baglantilar --- */
+.admin__devices-note {
+  margin: -4px 0 14px;
+  line-height: 1.5;
+}
+
+.admin__devices-note strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.admin__devices-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin__devices {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 760px;
+}
+
+.admin__devices th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 600;
+  padding: 6px 10px 8px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.admin__devices td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  vertical-align: top;
+}
+
+.admin__devices tbody tr:last-child td {
+  border-bottom: none;
+}
+
 /* --- giris karti --- */
 .admin__login {
   max-width: 400px;

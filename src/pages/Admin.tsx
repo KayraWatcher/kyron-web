@@ -1,6 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase, supabaseConfigured } from '../lib/supabase'
+import {
+  CONNECTION_RETENTION_DAYS,
+  IP_RETENTION_DAYS,
+  UNKNOWN,
+  fetchDeviceConnections,
+  toDeviceView,
+  type DeviceView,
+} from '../lib/devices'
 
 /**
  * KYRON ADMIN - anonim kurulum telemetrisi dashboard'u (#/admin).
@@ -49,6 +57,17 @@ function dayLabel(date: Date): string {
   const dd = String(date.getDate()).padStart(2, '0')
   const mm = String(date.getMonth() + 1).padStart(2, '0')
   return `${dd}.${mm}.${date.getFullYear()}`
+}
+
+/** `connected_at` -> `gg.aa.yyyy ss:dd`. Geçersiz tarih uydurulmaz. */
+function formatDateTime(iso: string): string {
+  const t = new Date(iso)
+  if (Number.isNaN(t.getTime())) return UNKNOWN
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return (
+    `${pad(t.getDate())}.${pad(t.getMonth() + 1)}.${t.getFullYear()} ` +
+    `${pad(t.getHours())}:${pad(t.getMinutes())}`
+  )
 }
 
 async function fetchStats(): Promise<Stats> {
@@ -215,6 +234,12 @@ function Dashboard({ session, onLogout }: { session: Session; onLogout: () => vo
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
+  // Cihazlar / Son Bağlantılar AYRI yüklenir: migration henüz
+  // uygulanmamışsa bu bölüm hata verse bile diğer bölümler bozulmaz.
+  const [devices, setDevices] = useState<DeviceView[]>([])
+  const [devicesError, setDevicesError] = useState<string | null>(null)
+  const [devicesLoading, setDevicesLoading] = useState(true)
+
   const load = useCallback(async () => {
     setLoading(true)
     setError(null)
@@ -227,9 +252,27 @@ function Dashboard({ session, onLogout }: { session: Session; onLogout: () => vo
     }
   }, [])
 
+  const loadDevices = useCallback(async () => {
+    setDevicesLoading(true)
+    setDevicesError(null)
+    try {
+      const rows = await fetchDeviceConnections(supabase, session)
+      setDevices(rows.map(toDeviceView))
+    } catch (e) {
+      setDevices([])
+      setDevicesError(e instanceof Error ? e.message : 'Bilinmeyen hata')
+    } finally {
+      setDevicesLoading(false)
+    }
+  }, [session])
+
   useEffect(() => {
     load()
   }, [load])
+
+  useEffect(() => {
+    loadDevices()
+  }, [loadDevices])
 
   const maxDaily = Math.max(1, ...(stats?.daily.map((d) => d.count) ?? [1]))
 
@@ -369,6 +412,69 @@ function Dashboard({ session, onLogout }: { session: Session; onLogout: () => vo
                   })
                 })()}
               </div>
+            </section>
+
+            <section className="admin__panel card">
+              <h2 className="admin__panel-title">CİHAZLAR / SON BAĞLANTILAR</h2>
+              <p className="admin__muted admin__devices-note">
+                IP ve cihaz bilgisi yalnızca güvenlik, hata ayıklama ve bağlantı
+                geçmişi içindir. IP <strong>{IP_RETENTION_DAYS} gün</strong>,
+                bağlantı kaydı <strong>{CONNECTION_RETENTION_DAYS} gün</strong>{' '}
+                sonra otomatik temizlenir. Eksik alanlar uydurulmaz.
+              </p>
+
+              {devicesLoading && (
+                <div className="admin__muted">Cihazlar yükleniyor…</div>
+              )}
+
+              {!devicesLoading && devicesError && (
+                <div className="admin__error">
+                  Cihazlar okunamadı: {devicesError} — migration uygulanmış mı
+                  ve hesabınız <code>admin_users</code> içinde mi kontrol edin.
+                  Diğer bölümler etkilenmez.
+                </div>
+              )}
+
+              {!devicesLoading && !devicesError && (
+                <>
+                  {devices.length === 0 ? (
+                    <div className="admin__muted">Kayıt yok</div>
+                  ) : (
+                    <div className="admin__devices-scroll">
+                      <table className="admin__devices">
+                        <thead>
+                          <tr>
+                            <th>IP</th>
+                            <th>Üretici</th>
+                            <th>Model</th>
+                            <th>Android</th>
+                            <th>KYRON</th>
+                            <th>Platform</th>
+                            <th>Son bağlantı</th>
+                            <th>Oturum</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {devices.map((d) => (
+                            <tr key={d.id}>
+                              <td className="admin__mono">{d.ip}</td>
+                              <td>{d.manufacturer}</td>
+                              <td>{d.model}</td>
+                              <td className="admin__mono">{d.androidVersion}</td>
+                              <td className="admin__mono">{d.appVersion}</td>
+                              <td className="admin__muted">{d.platform}</td>
+                              <td className="admin__mono">
+                                {formatDateTime(d.connectedAt)}
+                              </td>
+                              <td className="admin__mono">{d.sessionRef}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </>
+              )}
             </section>
           </>
         )}
