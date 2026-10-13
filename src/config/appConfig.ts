@@ -1,55 +1,56 @@
-/**
- * KYRON web sitesi genel ayarları.
+﻿/**
+ * KYRON web sitesi genel ayarlarÄ±.
  *
- * APK indirme adresi, sürüm ve dosya boyutu gibi bilgiler BURADAN yönetilir.
- * Henüz gerçek bir APK adresi yoksa değer `null` bırakılmalıdır; UI bunu
- * düzgün şekilde gösterir (buton "yakında" durumuna geçer, sahte link basılmaz).
+ * APK indirme adresi, sÃ¼rÃ¼m ve dosya boyutu gibi bilgiler BURADAN yÃ¶netilir.
+ * HenÃ¼z gerÃ§ek bir APK adresi yoksa deÄŸer `null` bÄ±rakÄ±lmalÄ±dÄ±r; UI bunu
+ * dÃ¼zgÃ¼n ÅŸekilde gÃ¶sterir (buton "yakÄ±nda" durumuna geÃ§er, sahte link basÄ±lmaz).
  */
 
 export interface ApkRelease {
-  /** Gerçek APK indirme adresi. Bilinmiyorsa `null`. */
+  /** GerÃ§ek APK indirme adresi. Bilinmiyorsa `null`. */
   url: string | null
-  /** Görüntülenecek sürüm etiketi. Bilinmiyorsa `null`. */
+  /** GÃ¶rÃ¼ntÃ¼lenecek sÃ¼rÃ¼m etiketi. Bilinmiyorsa `null`. */
   version: string | null
-  /** Dosya boyutu etiketi, örn. "24 MB". Bilinmiyorsa `null`. */
+  /** Dosya boyutu etiketi, Ã¶rn. "24 MB". Bilinmiyorsa `null`. */
   fileSize: string | null
 }
 
 export const APK_RELEASE: ApkRelease = {
-  url: '/downloads/KYRON-v1.3.1.apk',
-  version: 'v1.3.1',
-  fileSize: '57.7 MB',
+   url: '/downloads/KYRON-v1.3.2.apk',
+   version: 'v1.3.2',
+   fileSize: '57.9 MB',
 }
 
 export const APP_NAME = 'GOLD'
-export const APP_TAGLINE = 'Türkiye piyasalarını tek yerde takip et.'
+export const APP_TAGLINE = 'TÃ¼rkiye piyasalarÄ±nÄ± tek yerde takip et.'
 export const APP_DESCRIPTION =
-  'Modern finans uygulaması. BIST, altın, döviz, gümüş, fonlar, haberler ve ekonomik takvim tek uygulamada.'
+  'Modern finans uygulamasÄ±. BIST, altÄ±n, dÃ¶viz, gÃ¼mÃ¼ÅŸ, fonlar, haberler ve ekonomik takvim tek uygulamada.'
 
 export const CONTACT_EMAIL = '' // biliniyorsa doldurulabilir
 
 export const NAV_LINKS = [
   { label: 'Ana Sayfa', href: '#/' },
-  { label: 'Özellikler', href: '#/#ozellikler' },
+  { label: 'Ã–zellikler', href: '#/#ozellikler' },
   { label: 'Piyasalar', href: '#/#piyasalar' },
-  { label: 'İndir', href: '#/#indir' },
+  { label: 'Ä°ndir', href: '#/#indir' },
 ] as const
 
 export const FOOTER_LINKS = [
   { label: 'Ana Sayfa', href: '#/' },
-  { label: 'Özellikler', href: '#/#ozellikler' },
-  { label: 'İndir', href: '#/#indir' },
+  { label: 'Ã–zellikler', href: '#/#ozellikler' },
+  { label: 'Ä°ndir', href: '#/#indir' },
   { label: 'Gizlilik', href: '#/gizlilik' },
-  { label: 'Kullanım Koşulları', href: '#/kullanim-kosullari' },
+  { label: 'KullanÄ±m KoÅŸullarÄ±', href: '#/kullanim-kosullari' },
 ] as const
 
 export const LEGAL_PAGES = {
   privacy: {
-    title: 'Gizlilik Politikası',
+    title: 'Gizlilik PolitikasÄ±',
     updatedAt: null as string | null,
   },
   terms: {
-    title: 'Kullanım Koşulları',
+    title: 'KullanÄ±m KoÅŸullarÄ±',
     updatedAt: null as string | null,
   },
 } as const
+
